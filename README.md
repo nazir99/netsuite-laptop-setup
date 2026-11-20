@@ -11,6 +11,14 @@ One script sets up a Windows laptop for NetSuite work:
 5. nsq connected to the client account (read-only)
 6. SDF connected with the same key, so there are no more browser logins
 
+## Run it
+
+On the Windows PC, open **PowerShell** (not as admin) and paste:
+
+```powershell
+irm https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/setup-windows.ps1 | iex
+```
+
 Run it again any time: finished steps are skipped and the skills update.
 
 ## What the client sees in NetSuite
