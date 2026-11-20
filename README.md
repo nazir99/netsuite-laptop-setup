@@ -19,6 +19,16 @@ On the Windows PC, open **PowerShell** (not as admin) and paste:
 irm https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/setup-windows.ps1 | iex
 ```
 
+## Check it (no AI needed)
+
+The setup runs this at the end. Run it again any time:
+
+```powershell
+irm https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/check-windows.ps1 | iex
+```
+
+It prints PASS / FAIL / WARN for: Node, Java, Git, openssl, SuiteCloud CLI, nsq, all 13 skills, the key (present, expiry, locked to you), and for each connected account: nsq login, nsq reading real data, SDF login saved, and SDF talking to NetSuite. It only reads; it changes nothing in NetSuite.
+
 Run it again any time: finished steps are skipped and the skills update.
 
 ## What the client sees in NetSuite

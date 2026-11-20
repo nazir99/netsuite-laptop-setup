@@ -162,7 +162,8 @@ Step 5 'Connect to the client NetSuite account'
 $answer = Read-Host '    Connect a NetSuite account now? You need NetSuite admin access. (Y/n)'
 if ($answer -match '^[nN]') {
     Info 'Skipped. Run the setup again when you have admin access.'
-    Write-Host ''; Write-Host 'Done (account not connected yet).' -ForegroundColor Green
+    Write-Host ''; Write-Host 'Done (account not connected yet). Running the checks...' -ForegroundColor Green
+    try { & ([scriptblock]::Create((Invoke-RestMethod 'https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/check-windows.ps1'))) } catch { }
     return
 }
 
@@ -230,9 +231,13 @@ if ($LASTEXITCODE -eq 0) { Ok "SDF connected to $accountId as '$alias'" }
 else { Warn 'SDF key login failed. Check the D2 certificate ID (SuiteCloud Development Integration row), then run the setup again.' }
 
 Write-Host ''
-Write-Host 'Done.' -ForegroundColor Green
+Write-Host 'Done. Running the checks...' -ForegroundColor Green
+try { & ([scriptblock]::Create((Invoke-RestMethod 'https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/check-windows.ps1'))) }
+catch { Warn 'Could not download the check script. Run it later (see below).' }
+Write-Host ''
 Write-Host '  Open a NEW PowerShell window, then:'
 Write-Host "    nsq run `"SELECT id, name FROM subsidiary`" --account $alias --format md"
 Write-Host "    In an SDF project folder, once:  suitecloud account:setup:ci --select $alias"
 Write-Host '  Update skills and nsq later: run this setup again.'
+Write-Host '  Check everything any time:  irm https://raw.githubusercontent.com/nazir99/netsuite-laptop-setup/main/check-windows.ps1 | iex'
 Write-Host "  Never copy or share $SecretDir"
